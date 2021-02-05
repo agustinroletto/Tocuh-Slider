@@ -14,4 +14,39 @@ currentIndex = 0;
 slides.forEach((slide, index) => {
     const slideImage = slide.querySelector("img")
     slideImage.addEventListener("dragstart", (e) => e.preventDefault())
+
+
+    //touch events
+    slide.addEventListener("touchstart", touchStart(index))
+    slide.addEventListener("touchsend", touchEnd)
+    slide.addEventListener("touchmove", touchMove)
+
+    //mouse events
+    slide.addEventListener("mousedown", touchStart(index))
+    slide.addEventListener("mouseup", touchEnd)
+    slide.addEventListener("mouseleave", touchEnd)
+    slide.addEventListener("mousemove", touchMove)
+
 });
+
+//función para quitar el menú desplegable al hacer click sobre img
+window.oncontextmenu = function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+}
+
+function touchStart(index) {
+    return function (event) {
+        isDragging= true;
+    }
+}
+
+function touchEnd() {
+isDragging = false
+}
+function touchMove() {
+ if (isDragging) {
+    console.log("move")
+ }   
+}
